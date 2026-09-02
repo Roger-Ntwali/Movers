@@ -62,6 +62,14 @@ export function RwandaMap({ points, onSelect }: RwandaMapProps) {
     const map = mapRef.current;
     if (!map) return;
 
+    // `points` gets a new array once the real service-area data replaces the
+    // fallback, re-running this effect while the *first* fitBounds is still
+    // mid zoom-animation. Stopping any in-flight animation before touching
+    // markers — and never animating fitBounds — avoids Leaflet's animation
+    // callbacks firing against panes/markers this run has already replaced
+    // (that raced crash was corrupting the map and, from there, React itself).
+    map.stop();
+
     const markers = points.map((point, i) => {
       const marker = L.marker([point.latitude, point.longitude], { icon: dotIcon(i === 0) })
         .addTo(map)
@@ -74,10 +82,11 @@ export function RwandaMap({ points, onSelect }: RwandaMapProps) {
 
     if (points.length > 0) {
       const bounds = L.latLngBounds(points.map((p) => [p.latitude, p.longitude]));
-      map.fitBounds(bounds.pad(0.35), { maxZoom: 11 });
+      map.fitBounds(bounds.pad(0.35), { maxZoom: 11, animate: false });
     }
 
     return () => {
+      map.stop();
       markers.forEach((m) => m.remove());
     };
   }, [points, onSelect]);

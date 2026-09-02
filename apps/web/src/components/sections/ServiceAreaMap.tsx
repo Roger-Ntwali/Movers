@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
@@ -27,13 +27,24 @@ export function ServiceAreaMap() {
   const { data: areas } = useApiData<ServiceArea[]>("/api/service-areas", FALLBACK_AREAS);
   const navigate = useNavigate();
 
-  const points = areas
-    .filter((a): a is ServiceArea & { latitude: number; longitude: number } => a.latitude != null && a.longitude != null)
-    .map((a) => ({ id: a.id, name: a.districtName, latitude: a.latitude, longitude: a.longitude }));
+  // Stable references: RwandaMap rebuilds its markers/re-fits bounds whenever
+  // `points` or `onSelect` change identity, so without memoizing these an
+  // unrelated re-render of this component (any parent update) would churn
+  // the map for no reason.
+  const points = useMemo(
+    () =>
+      areas
+        .filter((a): a is ServiceArea & { latitude: number; longitude: number } => a.latitude != null && a.longitude != null)
+        .map((a) => ({ id: a.id, name: a.districtName, latitude: a.latitude, longitude: a.longitude })),
+    [areas],
+  );
 
-  const goToQuoteFor = (districtName: string) => {
-    navigate(`/?pickup=${encodeURIComponent(districtName)}#quote`);
-  };
+  const goToQuoteFor = useCallback(
+    (districtName: string) => {
+      navigate(`/?pickup=${encodeURIComponent(districtName)}#quote`);
+    },
+    [navigate],
+  );
 
   return (
     <section className="section" id="areas">
