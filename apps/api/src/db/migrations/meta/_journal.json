@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1788198477215,
+      "tag": "0000_stormy_living_mummy",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788400000000,
+      "tag": "0001_service_images_and_map_coords",
+      "breakpoints": true
+    }
+  ]
+}

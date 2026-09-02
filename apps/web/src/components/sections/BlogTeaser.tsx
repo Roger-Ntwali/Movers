@@ -1,0 +1,42 @@
+import { Link } from "react-router-dom";
+import { Reveal } from "../ui/Reveal";
+import { ArrowRightIcon } from "../ui/icons";
+import { useApiData } from "../../hooks/useApiData";
+import type { BlogPost } from "../../types";
+
+export function BlogTeaser() {
+  const { data: posts, loading } = useApiData<BlogPost[]>("/api/blog", []);
+  const latest = posts.slice(0, 3);
+
+  return (
+    <section className="section" id="tips">
+      <div className="container">
+        <Reveal className="section-head">
+          <span className="eyebrow">Moving Tips</span>
+          <h2>Smarter Moving Starts Here</h2>
+        </Reveal>
+
+        {latest.length === 0 ? (
+          !loading && <p className="review-empty">New articles are on the way.</p>
+        ) : (
+          <div className="blog-grid">
+            {latest.map((post) => (
+              <Reveal as="article" className="blog-card" key={post.id}>
+                <div className="blog-media">
+                  {post.coverImageUrl && <img src={post.coverImageUrl} alt="" loading="lazy" />}
+                  {post.category && <span className="blog-cat">{post.category}</span>}
+                </div>
+                <h3>{post.title}</h3>
+                {post.excerpt && <p>{post.excerpt}</p>}
+                <Link to={`/blog/${post.slug}`} className="btn-ghost">
+                  Read Article
+                  <ArrowRightIcon />
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.claude/
+.env
+.env.local
+.env.*.local
+*.env.tmp
+*.log
+.DS_Store
+Thumbs.db
