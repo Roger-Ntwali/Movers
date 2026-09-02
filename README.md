@@ -10,7 +10,8 @@ movers-rwanda/
 ├── packages/
 │   └── shared/            zod schemas + types shared by web and api
 ├── movers-rwanda/           the original static HTML/CSS/JS demo (kept for reference)
-├── render.yaml                Render Blueprint — deploys api + web (database is a separate Neon project)
+├── render.yaml                Render Blueprint — deploys the API (database is a separate Neon project)
+├── vercel.json                 Vercel config — deploys the frontend (apps/web)
 └── package.json
 ```
 
@@ -60,14 +61,16 @@ Gallery photos, service photos, and blog cover images are uploaded straight from
 
 ## Deploying
 
-Database: a dedicated **production** Neon project/database (separate from your local dev one). `render.yaml` deploys the API and static frontend as a Render Blueprint:
+Three pieces, three places: **frontend on Vercel**, **API on Render**, **database on Neon** (a dedicated production project, separate from your local dev one).
 
-1. Push this repo to GitHub/GitLab and connect it in the Render dashboard as a new Blueprint.
-2. After the first deploy, set these env vars in the Render dashboard (not committed anywhere):
-   - `movers-rwanda-api`: `DATABASE_URL` (production Neon connection string, with `?sslmode=require`), `CORS_ORIGIN` (the frontend's URL), `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
-   - `movers-rwanda-web`: `VITE_API_URL` (the API's URL), then trigger a redeploy of the static site (Vite bakes env vars in at build time).
-3. Run `npm run db:seed` once against the production database (e.g. via Render's shell, with `DATABASE_URL` set to the production one) with real `SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD` values to create the real admin login.
-4. Point your paid domain's DNS at Render (custom domain settings on each service) — Render issues free auto-renewing TLS certificates once the records verify.
+1. Push this repo to GitHub (done) and connect it in both the Vercel and Render dashboards.
+   - **Vercel**: "Add New Project" → import this repo. It reads `vercel.json` at the repo root for the build command and output directory — leave the project's Root Directory setting at the repo root (don't override it).
+   - **Render**: "New Blueprint" → this repo. It reads `render.yaml` for the API service.
+2. Set env vars:
+   - **Render** (`movers-rwanda-api`): `DATABASE_URL` (production Neon connection string, with `?sslmode=require`), `CORS_ORIGIN` (your Vercel URL, e.g. `https://moversrwanda.vercel.app`, plus your custom domain once attached — comma-separated), `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
+   - **Vercel** (project settings → Environment Variables): `VITE_API_URL` (the Render API's URL, e.g. `https://movers-rwanda-api.onrender.com`), then redeploy (Vite bakes env vars in at build time).
+3. Run `npm run db:seed` once against the production database (e.g. from your machine with `DATABASE_URL` temporarily set to the production one) with real `SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD` values to create the real admin login.
+4. Point your paid domain's DNS: the marketing site's domain (e.g. `moversrwanda.com`) at Vercel (custom domain settings in the Vercel dashboard), and optionally a subdomain (e.g. `api.moversrwanda.com`) at Render for the API. Both issue free auto-renewing TLS certificates once the records verify.
 
 ## Notes on what changed from the original demo
 

@@ -1,12 +1,13 @@
-# Render Blueprint — deploys the API and the static frontend from this one
-# file. See https://render.com/docs/blueprint-spec
+# Render Blueprint — deploys the API from this one file.
+# See https://render.com/docs/blueprint-spec
 #
+# The frontend (apps/web) deploys separately to Vercel — see vercel.json.
 # The database is NOT managed here — production uses a Neon Postgres
-# database (DATABASE_URL is set manually in the Render dashboard, see
-# README.md's "Deploying" section).
+# database (DATABASE_URL is set manually below, see README.md's "Deploying"
+# section).
 #
-# All commands run from the repo root (npm workspaces monorepo), so the
-# shared package is built once and reused by both apps.
+# Build runs from the repo root (npm workspaces monorepo), so the shared
+# package is built before the api.
 services:
   - type: web
     name: movers-rwanda-api
@@ -22,7 +23,8 @@ services:
         sync: false
       - key: JWT_SECRET
         generateValue: true
-      # Set after the frontend's URL is known, e.g. https://moversrwanda.com
+      # Set to your Vercel deployment's URL, e.g. https://moversrwanda.vercel.app
+      # (and your custom domain once it's attached), comma-separated.
       - key: CORS_ORIGIN
         sync: false
       - key: CLOUDINARY_CLOUD_NAME
@@ -31,17 +33,3 @@ services:
         sync: false
       - key: CLOUDINARY_API_SECRET
         sync: false
-
-  - type: web
-    name: movers-rwanda-web
-    runtime: static
-    buildCommand: npm install && npm run build:shared && npm run build:web
-    staticPublishPath: apps/web/dist
-    envVars:
-      # Set to the deployed API's URL, e.g. https://movers-rwanda-api.onrender.com
-      - key: VITE_API_URL
-        sync: false
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
