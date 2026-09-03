@@ -1,14 +1,15 @@
-import { lazy, Suspense, useCallback, useMemo } from "react";
+import { Suspense, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
 import { useApiData } from "../../hooks/useApiData";
+import { lazyWithRetry } from "../../lib/lazyWithRetry";
 import type { ServiceArea } from "../../types";
 
 // Leaflet is a sizable standalone dependency needed only for this one
 // section — split it into its own chunk instead of bloating the main
 // bundle every visitor downloads.
-const RwandaMap = lazy(() => import("../ui/RwandaMap").then((m) => ({ default: m.RwandaMap })));
+const RwandaMap = lazyWithRetry(() => import("../ui/RwandaMap").then((m) => ({ default: m.RwandaMap })));
 
 const FALLBACK_AREAS: ServiceArea[] = [
   { id: "kigali", districtName: "Kigali", description: null, latitude: -1.9441, longitude: 30.0619, isActive: true, displayOrder: 1 },

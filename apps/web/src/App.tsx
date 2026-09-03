@@ -1,32 +1,41 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { PublicLayout } from "./layouts/PublicLayout";
 import { HomePage } from "./pages/HomePage";
 import { BlogListPage } from "./pages/BlogListPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
 import { ProtectedRoute } from "./components/admin/ProtectedRoute";
+import { lazyWithRetry } from "./lib/lazyWithRetry";
 
 // The whole /admin dashboard (react-hook-form-heavy CRUD pages, none of it
 // needed by public site visitors) lives in its own chunk, fetched only when
 // someone actually navigates there.
-const AdminLayout = lazy(() => import("./layouts/AdminLayout").then((m) => ({ default: m.AdminLayout })));
-const LoginPage = lazy(() => import("./pages/admin/LoginPage").then((m) => ({ default: m.LoginPage })));
-const DashboardHome = lazy(() => import("./pages/admin/DashboardHome").then((m) => ({ default: m.DashboardHome })));
-const LeadsPage = lazy(() => import("./pages/admin/LeadsPage").then((m) => ({ default: m.LeadsPage })));
-const LeadDetailPage = lazy(() => import("./pages/admin/LeadDetailPage").then((m) => ({ default: m.LeadDetailPage })));
-const ServicesPage = lazy(() => import("./pages/admin/ServicesPage").then((m) => ({ default: m.ServicesPage })));
-const GalleryPage = lazy(() => import("./pages/admin/GalleryPage").then((m) => ({ default: m.GalleryPage })));
-const TestimonialsPage = lazy(() =>
+const AdminLayout = lazyWithRetry(() => import("./layouts/AdminLayout").then((m) => ({ default: m.AdminLayout })));
+const LoginPage = lazyWithRetry(() => import("./pages/admin/LoginPage").then((m) => ({ default: m.LoginPage })));
+const DashboardHome = lazyWithRetry(() =>
+  import("./pages/admin/DashboardHome").then((m) => ({ default: m.DashboardHome })),
+);
+const LeadsPage = lazyWithRetry(() => import("./pages/admin/LeadsPage").then((m) => ({ default: m.LeadsPage })));
+const LeadDetailPage = lazyWithRetry(() =>
+  import("./pages/admin/LeadDetailPage").then((m) => ({ default: m.LeadDetailPage })),
+);
+const ServicesPage = lazyWithRetry(() =>
+  import("./pages/admin/ServicesPage").then((m) => ({ default: m.ServicesPage })),
+);
+const GalleryPage = lazyWithRetry(() => import("./pages/admin/GalleryPage").then((m) => ({ default: m.GalleryPage })));
+const TestimonialsPage = lazyWithRetry(() =>
   import("./pages/admin/TestimonialsPage").then((m) => ({ default: m.TestimonialsPage })),
 );
-const ServiceAreasPage = lazy(() =>
+const ServiceAreasPage = lazyWithRetry(() =>
   import("./pages/admin/ServiceAreasPage").then((m) => ({ default: m.ServiceAreasPage })),
 );
-const BlogPage = lazy(() => import("./pages/admin/BlogPage").then((m) => ({ default: m.BlogPage })));
-const BlogEditorPage = lazy(() =>
+const BlogPage = lazyWithRetry(() => import("./pages/admin/BlogPage").then((m) => ({ default: m.BlogPage })));
+const BlogEditorPage = lazyWithRetry(() =>
   import("./pages/admin/BlogEditorPage").then((m) => ({ default: m.BlogEditorPage })),
 );
-const SettingsPage = lazy(() => import("./pages/admin/SettingsPage").then((m) => ({ default: m.SettingsPage })));
+const SettingsPage = lazyWithRetry(() =>
+  import("./pages/admin/SettingsPage").then((m) => ({ default: m.SettingsPage })),
+);
 
 export default function App() {
   return (
