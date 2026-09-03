@@ -582,6 +582,17 @@
   background:rgba(255,255,255,0.1); color:var(--white);
   display:flex; align-items:center; justify-content:center;
 }
+@media (max-width:640px){
+  /* The 28/32px close-button offset and 16:10 photo were sized for a
+     desktop-width lightbox; on a phone they left the card small and
+     centered with the close button stranded near the corner, far from
+     the actual content. Tighter padding + a taller crop use the screen
+     properly, and the button sits right at the card's corner instead. */
+  .lightbox{ padding:16px; }
+  .lightbox-inner{ max-width:100%; }
+  .lightbox-inner .ph{ aspect-ratio:4/5; border-radius:16px; padding:16px; }
+  .lightbox-close{ top:28px; right:16px; width:38px; height:38px; }
+}
 
 /* =========================================================
    BLOG / TIPS
