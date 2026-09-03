@@ -12,10 +12,21 @@ import { isProduction } from "../config/env.js";
 
 export const authRouter = Router();
 
-const cookieOptions = {
+// Frontend (Vercel) and API (Render) live on different domains in
+// production, so the auth cookie must be sent cross-site: SameSite=None
+// (which browsers require to be paired with Secure, hence isProduction
+// gating both together). Locally both run on http://localhost, where a
+// Secure cookie can't be set at all, so dev falls back to Lax.
+const cookieOptions: {
+  httpOnly: boolean;
+  secure: boolean;
+  sameSite: "none" | "lax";
+  maxAge: number;
+  path: string;
+} = {
   httpOnly: true,
   secure: isProduction,
-  sameSite: "strict" as const,
+  sameSite: isProduction ? "none" : "lax",
   maxAge: 12 * 60 * 60 * 1000,
   path: "/",
 };
