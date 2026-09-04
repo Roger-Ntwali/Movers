@@ -56,5 +56,5 @@ export function useCrudResource<T extends WithId>(basePath: string) {
     [basePath],
   );
 
-  return { items, loading, error, refresh, create, update, remove };
+  return { items, setItems, loading, error, refresh, create, update, remove };
 }

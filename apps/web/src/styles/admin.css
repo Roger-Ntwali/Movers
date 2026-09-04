@@ -79,12 +79,38 @@
   background:var(--green-light); color:var(--green-dark);
 }
 .admin-badge.status-new{ background:#E6F0FF; color:#1D4ED8; }
-.admin-badge.status-contacted{ background:#FEF3E2; color:#B45309; }
-.admin-badge.status-quoted{ background:#F3E8FF; color:#7E22CE; }
+.admin-badge.status-contacted{ background:#F3E8FF; color:#7E22CE; }
+.admin-badge.status-quoted{ background:#FEF3E2; color:#B45309; }
 .admin-badge.status-won{ background:var(--green-light); color:var(--green-dark); }
 .admin-badge.status-lost{ background:#FEE4E2; color:#B42318; }
 .admin-badge.status-draft{ background:#F1F1F1; color:var(--muted); }
 .admin-badge.status-published{ background:var(--green-light); color:var(--green-dark); }
+
+/* Inline, editable version of .admin-badge — an actual <select> styled to
+   look like the badge it replaces, so changing a lead's status is a single
+   click instead of navigating to the detail page. */
+.admin-status-select{
+  appearance:none; -webkit-appearance:none;
+  border:1.5px solid transparent;
+  border-radius:999px;
+  padding:5px 26px 5px 10px;
+  font-size:0.74rem; font-weight:700; text-transform:capitalize;
+  font-family:inherit;
+  cursor:pointer;
+  background-color:var(--green-light); color:var(--green-dark);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='currentColor' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  transition:opacity .15s, border-color .15s;
+}
+.admin-status-select:hover{ border-color:currentColor; }
+.admin-status-select:focus-visible{ outline:2px solid var(--dark); outline-offset:2px; }
+.admin-status-select:disabled{ opacity:0.6; cursor:wait; }
+.admin-status-select.status-new{ background-color:#E6F0FF; color:#1D4ED8; }
+.admin-status-select.status-contacted{ background-color:#F3E8FF; color:#7E22CE; }
+.admin-status-select.status-quoted{ background-color:#FEF3E2; color:#B45309; }
+.admin-status-select.status-won{ background-color:var(--green-light); color:var(--green-dark); }
+.admin-status-select.status-lost{ background-color:#FEE4E2; color:#B42318; }
 
 .admin-toolbar{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
 .admin-toolbar .filters{ display:flex; gap:8px; flex-wrap:wrap; }
@@ -122,6 +148,47 @@
 .admin-link-btn{ font-weight:700; color:var(--green-dark); font-size:0.85rem; }
 .admin-danger{ color:#D92D20; }
 
+/* Modal (Add/Edit Lead) */
+.admin-modal-backdrop{
+  position:fixed; inset:0; z-index:300;
+  background:rgba(11,15,14,0.5);
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:40px 20px; overflow-y:auto;
+}
+.admin-modal{
+  background:var(--white); border-radius:var(--radius-lg);
+  padding:28px; width:100%; max-width:620px;
+  box-shadow:var(--shadow-lg);
+}
+.admin-modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.admin-modal-head h3{ font-size:1.2rem; }
+.admin-modal-close{
+  width:32px; height:32px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted); font-size:1.1rem; line-height:1;
+}
+.admin-modal-close:hover{ background:var(--bg-light); color:var(--dark); }
+
+/* Drawer (View Details) */
+.admin-drawer-backdrop{
+  position:fixed; inset:0; z-index:300;
+  background:rgba(11,15,14,0.5);
+  display:flex; justify-content:flex-end;
+}
+.admin-drawer{
+  width:100%; max-width:440px; height:100%;
+  background:var(--white);
+  box-shadow:var(--shadow-lg);
+  padding:28px;
+  overflow-y:auto;
+  animation:drawerIn .25s var(--ease);
+}
+@keyframes drawerIn{ from{ transform:translateX(24px); opacity:0.6; } to{ transform:translateX(0); opacity:1; } }
+.admin-drawer-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:20px; }
+.admin-drawer-field{ margin-bottom:18px; }
+.admin-drawer-field strong{ display:block; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin-bottom:4px; }
+.admin-drawer-field p{ font-size:0.96rem; white-space:pre-wrap; }
+
 .admin-hamburger{
   display:none;
   width:40px; height:40px; border-radius:10px; border:1px solid var(--border);
@@ -133,4 +200,7 @@
   .admin-main{ padding:20px; }
   .admin-hamburger{ display:flex; }
   .admin-form .row{ grid-template-columns:1fr; }
+  .admin-modal-backdrop{ padding:0; }
+  .admin-modal{ max-width:100%; min-height:100vh; border-radius:0; }
+  .admin-drawer{ max-width:100%; }
 }

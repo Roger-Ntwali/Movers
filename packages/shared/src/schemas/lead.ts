@@ -42,8 +42,14 @@ export const createLeadSchema = z.object({
 });
 export type CreateLeadInput = z.infer<typeof createLeadSchema>;
 
-export const updateLeadSchema = z.object({
-  status: z.enum(LEAD_STATUSES).optional(),
-  notes: z.string().max(4000).optional(),
-});
+// Admin edits: every business field from createLeadSchema, all optional
+// (partial update), plus the two admin-only fields. Reuses the same
+// per-field validation as the public form instead of redefining it.
+export const updateLeadSchema = createLeadSchema
+  .omit({ company: true })
+  .partial()
+  .extend({
+    status: z.enum(LEAD_STATUSES).optional(),
+    notes: z.string().max(4000).optional(),
+  });
 export type UpdateLeadInput = z.infer<typeof updateLeadSchema>;
