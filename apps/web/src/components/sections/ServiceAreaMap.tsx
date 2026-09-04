@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
 import { useApiData } from "../../hooks/useApiData";
+import { useInView } from "../../hooks/useInView";
 import { lazyWithRetry } from "../../lib/lazyWithRetry";
 import type { ServiceArea } from "../../types";
 
@@ -27,6 +28,18 @@ const FALLBACK_AREAS: ServiceArea[] = [
 export function ServiceAreaMap() {
   const { data: areas } = useApiData<ServiceArea[]>("/api/service-areas", FALLBACK_AREAS);
   const navigate = useNavigate();
+  // Leaflet's tile requests start the instant RwandaMap mounts. This section
+  // sits well below the fold, so waiting until it's getting close avoids
+  // dozens of map-tile requests firing during initial load. The margin is
+  // deliberately much larger than Reveal's own (~-60px) trigger: Leaflet
+  // reads its container's layout on mount, and mounting while the ancestor
+  // .reveal is still mid transform-transition raced Leaflet's internal
+  // position tracking into a crash. Triggering this well before Reveal does
+  // means the map has already settled by the time that transition runs.
+  const { ref: mapRef, isVisible: mapInView } = useInView<HTMLDivElement>({
+    rootMargin: "800px 0px 800px 0px",
+    threshold: 0,
+  });
 
   // Stable references: RwandaMap rebuilds its markers/re-fits bounds whenever
   // `points` or `onSelect` change identity, so without memoizing these an
@@ -51,9 +64,15 @@ export function ServiceAreaMap() {
     <section className="section" id="areas">
       <div className="container area-grid">
         <Reveal className="area-map">
-          <Suspense fallback={<div className="area-map-loading" />}>
-            <RwandaMap points={points} onSelect={goToQuoteFor} />
-          </Suspense>
+          <div ref={mapRef} style={{ position: "absolute", inset: 0 }}>
+            {mapInView ? (
+              <Suspense fallback={<div className="area-map-loading" />}>
+                <RwandaMap points={points} onSelect={goToQuoteFor} />
+              </Suspense>
+            ) : (
+              <div className="area-map-loading" />
+            )}
+          </div>
         </Reveal>
         <Reveal className="area-copy">
           <span className="eyebrow">Coverage</span>

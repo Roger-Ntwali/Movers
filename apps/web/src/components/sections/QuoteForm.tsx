@@ -10,6 +10,7 @@ import {
 } from "@movers-rwanda/shared";
 import { Reveal } from "../ui/Reveal";
 import { api, ApiError } from "../../lib/api";
+import { useMagneticHover } from "../../hooks/useMagneticHover";
 import { ClockIcon, PinIcon } from "../ui/icons";
 
 const todayIso = new Date().toISOString().split("T")[0];
@@ -43,6 +44,7 @@ export function QuoteForm() {
 
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const submitRef = useMagneticHover<HTMLButtonElement>(0.2);
 
   const onSubmit = async (data: CreateLeadInput) => {
     setServerError(null);
@@ -127,31 +129,26 @@ export function QuoteForm() {
               </select>
               {errors.rooms && <span className="field-error">{errors.rooms.message}</span>}
             </div>
-            <div className="field">
+            <div className="field floating">
+              <input id="name" placeholder=" " {...register("name")} />
               <label htmlFor="name">Name</label>
-              <input id="name" placeholder="Your full name" {...register("name")} />
               {errors.name && <span className="field-error">{errors.name.message}</span>}
             </div>
 
-            <div className="field">
+            <div className="field floating">
+              <input id="phone" placeholder=" " title="e.g. +250 7__ ___ ___" {...register("phone")} />
               <label htmlFor="phone">Phone Number</label>
-              <input id="phone" placeholder="+250 7__ ___ ___" {...register("phone")} />
               {errors.phone && <span className="field-error">{errors.phone.message}</span>}
             </div>
-            <div className="field span-2">
+            <div className="field floating span-2">
+              <input id="email" type="email" placeholder=" " {...register("email")} />
               <label htmlFor="email">Email</label>
-              <input id="email" type="email" placeholder="you@email.com" {...register("email")} />
               {errors.email && <span className="field-error">{errors.email.message}</span>}
             </div>
 
-            <div className="field span-4">
+            <div className="field floating span-4">
+              <textarea id="details" rows={3} placeholder=" " {...register("details")} />
               <label htmlFor="details">Additional Details Or Requests</label>
-              <textarea
-                id="details"
-                rows={3}
-                placeholder="Anything else we should know — fragile items, stairs/elevator access, a specific time of day, etc."
-                {...register("details")}
-              />
               {errors.details && <span className="field-error">{errors.details.message}</span>}
             </div>
 
@@ -159,7 +156,7 @@ export function QuoteForm() {
               <p className="quote-fineprint">
                 By requesting a quote, you agree to be contacted by our team about your move.
               </p>
-              <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+              <button type="submit" className="btn btn-primary magnetic" ref={submitRef} disabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Get A Quote"}
               </button>
             </div>

@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
 import { WhatsAppIcon } from "../ui/icons";
+import { useMagneticHover } from "../../hooks/useMagneticHover";
 import { QUOTE_WHATSAPP_MESSAGE, useSiteSettings, whatsappHref } from "../../context/SiteSettingsContext";
 
 export function Hero() {
   const settings = useSiteSettings();
+  const ctaRef = useMagneticHover<HTMLAnchorElement>();
 
   return (
     <section className="hero">
@@ -43,7 +45,7 @@ export function Hero() {
         </Reveal>
 
         <Reveal className="hero-ctas">
-          <Link to="/#quote" className="btn btn-primary">
+          <Link to="/#quote" className="btn btn-primary magnetic" ref={ctaRef}>
             Get A Quote
           </Link>
           <a

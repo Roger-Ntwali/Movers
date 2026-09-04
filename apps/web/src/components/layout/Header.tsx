@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useIsScrolled } from "../../hooks/useScrollPosition";
+import { useHeaderScroll } from "../../hooks/useHeaderScroll";
+import { useMagneticHover } from "../../hooks/useMagneticHover";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
 import { ChevronDownIcon } from "../ui/icons";
 
@@ -27,10 +28,13 @@ const RESOURCE_LINKS = [
 ] as const;
 
 export function Header() {
-  const isScrolled = useIsScrolled();
+  const { isScrolled, isHidden } = useHeaderScroll();
   const settings = useSiteSettings();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const ctaRef = useMagneticHover<HTMLAnchorElement>(0.25);
+  // Never hide the header while the mobile panel it anchors is open.
+  const hidden = isHidden && !mobileOpen;
 
   const closeMobile = () => {
     setMobileOpen(false);
@@ -47,7 +51,10 @@ export function Header() {
     // panel inside it would size/position the panel against the header's own
     // (short) box instead of the viewport.
     <>
-      <header className={`site-header${isScrolled ? " is-scrolled" : ""}`} id="siteHeader">
+      <header
+        className={`site-header${isScrolled ? " is-scrolled" : ""}${hidden ? " is-hidden" : ""}`}
+        id="siteHeader"
+      >
       <div className="container nav-wrap">
         <Link to="/#top" className="brand" onClick={closeMobile}>
           <img src="/logo.png" alt="Movers Rwanda" className="brand-logo" />
@@ -115,7 +122,7 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
-          <Link to="/#quote" className="btn btn-primary btn-sm desktop-only">
+          <Link to="/#quote" className="btn btn-primary btn-sm magnetic desktop-only" ref={ctaRef}>
             Get A Quote
           </Link>
           <button

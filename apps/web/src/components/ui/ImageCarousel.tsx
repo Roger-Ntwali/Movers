@@ -26,7 +26,7 @@ export function ImageCarousel({ images, intervalMs = 4000, className = "" }: Ima
       {images.map((src, i) => (
         <img
           key={src}
-          src={optimizeCloudinaryUrl(src, "w_800")}
+          src={optimizeCloudinaryUrl(src, "w_600")}
           alt=""
           className={`image-carousel-slide${i === index ? " is-active" : ""}`}
           loading={i === 0 ? "eager" : "lazy"}

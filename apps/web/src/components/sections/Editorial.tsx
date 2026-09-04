@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
+import { useInView } from "../../hooks/useInView";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
 import { optimizeCloudinaryUrl } from "../../lib/cloudinaryUrl";
 
@@ -9,12 +10,18 @@ export function Editorial() {
   const settings = useSiteSettings();
   const videoUrl = settings.editorial_video_url;
   const [videoReady, setVideoReady] = useState(false);
+  // The video sits mid-page — starting its (looping) download the moment the
+  // route mounts keeps the network busy long after the page is actually
+  // usable. Deferring the <video> element itself until this section nears
+  // the viewport means the request doesn't fire at all until it's needed.
+  const { ref: mediaRef, isVisible: mediaInView } = useInView<HTMLDivElement>();
 
   return (
     <section className="section section--light">
       <div className="container editorial">
         <Reveal className="editorial-media">
-          {videoUrl ? (
+          <div ref={mediaRef} style={{ position: "absolute", inset: 0 }} />
+          {videoUrl && mediaInView ? (
             <>
               <video
                 src={optimizeCloudinaryUrl(videoUrl)}
@@ -29,6 +36,11 @@ export function Editorial() {
                 Loading video…
               </div>
             </>
+          ) : videoUrl ? (
+            <div className="media-loading-veil">
+              <span className="spinner" aria-hidden="true"></span>
+              Loading video…
+            </div>
           ) : (
             <svg className="route-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
               <path

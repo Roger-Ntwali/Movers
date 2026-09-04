@@ -133,6 +133,19 @@ input,select,textarea{ font-family:inherit; font-size:1rem; }
 .btn-sm{ padding:11px 20px; font-size:0.85rem; }
 .btn-block{ width:100%; }
 
+/* Magnetic hover glow — JS (useMagneticHover) sets --mx/--my and a small
+   translate on mousemove; this just renders the glow that follows them. */
+.magnetic{ position:relative; }
+.magnetic::before{
+  content:'';
+  position:absolute; inset:0; border-radius:inherit;
+  background:radial-gradient(90px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.4), transparent 70%);
+  opacity:0;
+  transition:opacity .3s var(--ease);
+  pointer-events:none;
+}
+.magnetic:hover::before{ opacity:1; }
+
 /* Focus states */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
   outline:2.5px solid var(--green-dark);
