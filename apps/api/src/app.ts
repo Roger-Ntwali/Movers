@@ -24,7 +24,10 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/api/health", (_req, res) => res.json({ ok: true }));
+// Kept ahead of every resource router — must stay a trivial, DB-free 200
+// so external keep-alive pings (see .github/workflows/keepalive.yml) are
+// as cheap as possible and never blocked by a slow route ahead of it.
+app.get("/api/health", (_req, res) => res.status(200).json({ status: "ok" }));
 
 app.use("/api/leads", leadsRouter);
 app.use("/api/auth", authRouter);

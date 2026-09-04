@@ -1,0 +1,31 @@
+name: Keep Render API awake
+
+# Render's free tier spins the service down after 15 minutes of inactivity;
+# the first request after that pays a 30-60s+ cold-start penalty. Pinging
+# the lightweight /api/health route every 10 minutes keeps it warm.
+#
+# GitHub auto-disables scheduled workflows on a repo with no commits for 60
+# days — if pings silently stop, push anything and re-enable the workflow
+# from the Actions tab.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Ping health endpoint
+        env:
+          HEALTH_URL: ${{ secrets.RENDER_HEALTH_URL }}
+        run: |
+          if [ -z "$HEALTH_URL" ]; then
+            echo "::error::RENDER_HEALTH_URL repo secret is not set (Settings -> Secrets and variables -> Actions)."
+            exit 1
+          fi
+          curl --fail --silent --show-error \
+            --max-time 15 \
+            -o /dev/null -w "Response: %{http_code} in %{time_total}s\n" \
+            "$HEALTH_URL"
