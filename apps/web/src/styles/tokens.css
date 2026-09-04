@@ -25,11 +25,15 @@
   --container: 1240px;
   --header-h: 132px;
   --header-h-scrolled: 76px;
+  --mobile-bar-h: 76px;
 
   --ease: cubic-bezier(.22,1,.36,1);
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
+/* Removes the 300ms tap-delay/double-tap-zoom ambiguity on every link and
+   button — safe globally, no visual effect, just faster/more certain taps. */
+a, button{ touch-action:manipulation; }
 html{ scroll-behavior:smooth; }
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
