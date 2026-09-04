@@ -37,6 +37,7 @@ export const createLeadSchema = z.object({
     .max(20)
     .regex(/^[+\d][\d\s-]{5,19}$/, "Enter a valid phone number"),
   email: z.union([z.literal(""), z.string().trim().email()]).optional(),
+  details: z.string().trim().max(1000, "Keep it under 1000 characters").optional(),
   company: z.string().max(0, "Spam detected").optional().default(""),
 });
 export type CreateLeadInput = z.infer<typeof createLeadSchema>;

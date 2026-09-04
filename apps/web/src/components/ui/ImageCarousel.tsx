@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { optimizeCloudinaryUrl } from "../../lib/cloudinaryUrl";
 
 interface ImageCarouselProps {
   images: string[];
@@ -25,7 +26,7 @@ export function ImageCarousel({ images, intervalMs = 4000, className = "" }: Ima
       {images.map((src, i) => (
         <img
           key={src}
-          src={src}
+          src={optimizeCloudinaryUrl(src, "w_800")}
           alt=""
           className={`image-carousel-slide${i === index ? " is-active" : ""}`}
           loading={i === 0 ? "eager" : "lazy"}

@@ -38,6 +38,7 @@ export const leads = pgTable("leads", {
   name: varchar("name", { length: 120 }).notNull(),
   phone: varchar("phone", { length: 30 }).notNull(),
   email: varchar("email", { length: 255 }),
+  details: text("details"),
   status: leadStatusEnum("status").notNull().default("new"),
   notes: text("notes"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

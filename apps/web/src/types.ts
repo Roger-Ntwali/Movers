@@ -68,6 +68,7 @@ export interface Lead {
   name: string;
   phone: string;
   email: string | null;
+  details: string | null;
   status: LeadStatus;
   notes: string | null;
   createdAt: string;

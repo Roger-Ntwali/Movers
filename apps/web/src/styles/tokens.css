@@ -143,3 +143,34 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
 .reveal.is-visible{ opacity:1; transform:translateY(0); }
 .reveal-stagger > *{ transition-delay:calc(var(--i,0) * 70ms); }
+
+/* Image / video loading states — shimmer placeholder until loaded, then a
+   quick fade-in, so media never just pops in or shows blank while it
+   downloads. */
+.optimized-img{
+  opacity:0;
+  transition:opacity .4s var(--ease);
+  background-image:linear-gradient(110deg, var(--bg-light) 8%, #eceeec 18%, var(--bg-light) 33%);
+  background-size:200% 100%;
+  animation:img-shimmer 1.4s linear infinite;
+}
+.optimized-img.is-loaded{ opacity:1; animation:none; background-image:none; }
+@keyframes img-shimmer{ from{ background-position-x:100%; } to{ background-position-x:-100%; } }
+
+.media-loading-veil{
+  position:absolute; inset:0; z-index:1;
+  display:flex; align-items:center; justify-content:center;
+  gap:10px;
+  background:linear-gradient(155deg, rgba(0,208,94,0.1), transparent 60%), var(--bg-light);
+  color:var(--muted); font-size:0.85rem; font-weight:600;
+  opacity:1;
+  transition:opacity .4s var(--ease);
+  pointer-events:none;
+}
+.media-loading-veil.is-hidden{ opacity:0; }
+.media-loading-veil .spinner{
+  width:16px; height:16px; border-radius:50%;
+  border:2px solid var(--border); border-top-color:var(--green-dark);
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }

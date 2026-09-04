@@ -109,6 +109,12 @@ export function LeadDetailPage() {
               </p>
             </div>
           )}
+          {lead.details && (
+            <div>
+              <strong>Additional Details (from customer)</strong>
+              <p style={{ whiteSpace: "pre-wrap" }}>{lead.details}</p>
+            </div>
+          )}
         </div>
       </div>
 

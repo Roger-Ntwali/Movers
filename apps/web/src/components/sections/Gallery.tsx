@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Reveal } from "../ui/Reveal";
 import { CloseIcon } from "../ui/icons";
+import { OptimizedImage } from "../ui/OptimizedImage";
 import { useApiData } from "../../hooks/useApiData";
 import type { GalleryImage } from "../../types";
 
@@ -48,7 +49,7 @@ export function Gallery() {
                 onClick={() => setOpenIndex(i)}
               >
                 <div className="ph">
-                  <img src={img.imageUrl} alt={img.altText ?? img.caption ?? ""} loading="lazy" />
+                  <OptimizedImage src={img.imageUrl} width={400} alt={img.altText ?? img.caption ?? ""} />
                   {img.caption && <span className="cap">{img.caption}</span>}
                 </div>
               </button>
@@ -64,7 +65,7 @@ export function Gallery() {
         {open && (
           <div className="lightbox-inner">
             <div className="ph">
-              <img src={open.imageUrl} alt={open.altText ?? open.caption ?? ""} />
+              <OptimizedImage src={open.imageUrl} width={1000} loading="eager" alt={open.altText ?? open.caption ?? ""} />
               {open.caption && <span className="cap">{open.caption}</span>}
             </div>
           </div>

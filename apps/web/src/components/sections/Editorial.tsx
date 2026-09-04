@@ -1,18 +1,34 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
+import { optimizeCloudinaryUrl } from "../../lib/cloudinaryUrl";
 
 export function Editorial() {
   const settings = useSiteSettings();
   const videoUrl = settings.editorial_video_url;
+  const [videoReady, setVideoReady] = useState(false);
 
   return (
     <section className="section section--light">
       <div className="container editorial">
         <Reveal className="editorial-media">
           {videoUrl ? (
-            <video src={videoUrl} autoPlay muted loop playsInline />
+            <>
+              <video
+                src={optimizeCloudinaryUrl(videoUrl)}
+                autoPlay
+                muted
+                loop
+                playsInline
+                onCanPlay={() => setVideoReady(true)}
+              />
+              <div className={`media-loading-veil${videoReady ? " is-hidden" : ""}`}>
+                <span className="spinner" aria-hidden="true"></span>
+                Loading video…
+              </div>
+            </>
           ) : (
             <svg className="route-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
               <path

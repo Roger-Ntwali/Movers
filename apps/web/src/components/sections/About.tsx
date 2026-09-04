@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon, PinIcon, TeamIcon } from "../ui/icons";
+import { OptimizedImage } from "../ui/OptimizedImage";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
 
 export function About() {
@@ -12,7 +13,11 @@ export function About() {
       <div className="container about-grid">
         <Reveal className="about-media">
           <div className="about-photo">
-            {aboutImage ? <img src={aboutImage} alt="Movers Rwanda team at work" /> : <div className="grain"></div>}
+            {aboutImage ? (
+              <OptimizedImage src={aboutImage} width={800} alt="Movers Rwanda team at work" />
+            ) : (
+              <div className="grain"></div>
+            )}
           </div>
           <div className="stat-float f1">
             <span className="ic">

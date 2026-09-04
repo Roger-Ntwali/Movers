@@ -116,7 +116,7 @@ export function Header() {
 
         <div className="header-actions">
           <Link to="/#quote" className="btn btn-primary btn-sm desktop-only">
-            Get a Free Quote
+            Get A Quote
           </Link>
           <button
             className={`hamburger${mobileOpen ? " is-open" : ""}`}
@@ -186,7 +186,7 @@ export function Header() {
         </ul>
         <div className="mobile-cta">
           <Link to="/#quote" className="btn btn-primary btn-block" onClick={closeMobile}>
-            Get a Free Quote
+            Get A Quote
           </Link>
           <a className="btn btn-outline on-light btn-block" href={`tel:${settings.phone}`} onClick={closeMobile}>
             Call {settings.phone}

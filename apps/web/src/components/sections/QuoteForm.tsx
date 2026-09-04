@@ -61,7 +61,7 @@ export function QuoteForm() {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="quote-card-head">
             <div>
-              <h2>Get Your Free Moving Quote</h2>
+              <h2>Get A Quote</h2>
               <p>Tell us where you&rsquo;re moving from and where you&rsquo;re going.</p>
             </div>
             <span className="quote-badge">
@@ -144,12 +144,23 @@ export function QuoteForm() {
               {errors.email && <span className="field-error">{errors.email.message}</span>}
             </div>
 
+            <div className="field span-4">
+              <label htmlFor="details">Additional Details Or Requests</label>
+              <textarea
+                id="details"
+                rows={3}
+                placeholder="Anything else we should know — fragile items, stairs/elevator access, a specific time of day, etc."
+                {...register("details")}
+              />
+              {errors.details && <span className="field-error">{errors.details.message}</span>}
+            </div>
+
             <div className="quote-submit-row">
               <p className="quote-fineprint">
                 By requesting a quote, you agree to be contacted by our team about your move.
               </p>
               <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Get My Free Quote"}
+                {isSubmitting ? "Sending..." : "Get A Quote"}
               </button>
             </div>
           </div>

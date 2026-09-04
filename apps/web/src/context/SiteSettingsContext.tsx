@@ -30,3 +30,5 @@ export function useSiteSettings() {
 export function whatsappHref(whatsappNumber: string, text: string) {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 }
+
+export const QUOTE_WHATSAPP_MESSAGE = "Hello Movers Rwanda, I'd like to get a quote.";

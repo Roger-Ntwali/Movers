@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { ArrowRightIcon } from "../ui/icons";
+import { OptimizedImage } from "../ui/OptimizedImage";
 import { useApiData } from "../../hooks/useApiData";
 import type { BlogPost } from "../../types";
 
@@ -23,7 +24,7 @@ export function BlogTeaser() {
             {latest.map((post) => (
               <Reveal as="article" className="blog-card" key={post.id}>
                 <div className="blog-media">
-                  {post.coverImageUrl && <img src={post.coverImageUrl} alt="" loading="lazy" />}
+                  {post.coverImageUrl && <OptimizedImage src={post.coverImageUrl} width={500} alt="" />}
                   {post.category && <span className="blog-cat">{post.category}</span>}
                 </div>
                 <h3>{post.title}</h3>

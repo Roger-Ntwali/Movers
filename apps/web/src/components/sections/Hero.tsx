@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
 import { WhatsAppIcon } from "../ui/icons";
-import { useSiteSettings, whatsappHref } from "../../context/SiteSettingsContext";
+import { QUOTE_WHATSAPP_MESSAGE, useSiteSettings, whatsappHref } from "../../context/SiteSettingsContext";
 
 export function Hero() {
   const settings = useSiteSettings();
@@ -44,10 +44,10 @@ export function Hero() {
 
         <Reveal className="hero-ctas">
           <Link to="/#quote" className="btn btn-primary">
-            Get A Free Quote
+            Get A Quote
           </Link>
           <a
-            href={whatsappHref(settings.whatsapp_number, "Hello Movers Rwanda, I'd like to get a free moving quote.")}
+            href={whatsappHref(settings.whatsapp_number, QUOTE_WHATSAPP_MESSAGE)}
             target="_blank"
             rel="noopener"
             className="btn btn-outline"

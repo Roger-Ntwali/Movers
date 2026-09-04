@@ -1,4 +1,4 @@
-import { useSiteSettings, whatsappHref } from "../../context/SiteSettingsContext";
+import { QUOTE_WHATSAPP_MESSAGE, useSiteSettings, whatsappHref } from "../../context/SiteSettingsContext";
 import { WhatsAppIcon } from "../ui/icons";
 
 export function WhatsAppButton() {
@@ -6,7 +6,7 @@ export function WhatsAppButton() {
   return (
     <a
       className="wa-float"
-      href={whatsappHref(settings.whatsapp_number, "Hello Movers Rwanda, I'd like to get a free moving quote.")}
+      href={whatsappHref(settings.whatsapp_number, QUOTE_WHATSAPP_MESSAGE)}
       target="_blank"
       rel="noopener"
       aria-label="Chat with us on WhatsApp"

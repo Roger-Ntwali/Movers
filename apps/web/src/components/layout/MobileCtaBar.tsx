@@ -9,7 +9,7 @@ export function MobileCtaBar() {
         Call Now
       </a>
       <Link to="/#quote" className="btn btn-primary btn-sm">
-        Get A Free Quote
+        Get A Quote
       </Link>
     </div>
   );

@@ -227,8 +227,9 @@
 .quote-form{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
 .field{ display:flex; flex-direction:column; gap:8px; }
 .field.span-2{ grid-column:span 2; }
+.field.span-4{ grid-column:span 4; }
 .field label{ font-size:0.78rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:0.05em; }
-.field input, .field select{
+.field input, .field select, .field textarea{
   padding:14px 16px;
   border-radius:12px;
   border:1.5px solid var(--border);
@@ -237,7 +238,8 @@
   transition:border-color .2s, background .2s;
   width:100%;
 }
-.field input:focus, .field select:focus{ outline:none; border-color:var(--green); background:var(--white); }
+.field textarea{ font-family:inherit; resize:vertical; min-height:88px; }
+.field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--green); background:var(--white); }
 .field-error{ color:#D92D20; font-size:0.78rem; font-weight:600; }
 .field-icon-wrap{ position:relative; display:flex; align-items:center; }
 .field-icon-wrap svg{ position:absolute; left:14px; color:var(--muted); pointer-events:none; }
@@ -271,13 +273,18 @@
 
 @media (max-width:900px){
   .quote-card{ margin-top:-90px; padding:26px; }
-  .quote-form{ grid-template-columns:1fr 1fr; }
-  .field.span-2{ grid-column:span 2; }
+  .quote-form{ grid-template-columns:1fr 1fr; gap:14px; }
+  .field.span-2, .field.span-4{ grid-column:span 2; }
 }
 @media (max-width:560px){
-  .quote-form{ grid-template-columns:1fr; }
-  .field.span-2{ grid-column:span 1; }
-  .quote-submit-row{ grid-column:1; }
+  .quote-card{ margin-top:-70px; padding:20px; border-radius:var(--radius-md); }
+  .quote-card-head{ margin-bottom:20px; gap:14px; }
+  .quote-form{ grid-template-columns:1fr; gap:12px; }
+  .field.span-2, .field.span-4{ grid-column:1; }
+  .field input, .field select, .field textarea{ padding:12px 14px; }
+  .quote-submit-row{ grid-column:1; flex-direction:column; align-items:stretch; gap:14px; }
+  .quote-submit-row .btn{ width:100%; }
+  .quote-fineprint{ max-width:none; order:2; }
 }
 
 /* =========================================================
