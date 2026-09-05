@@ -40,21 +40,23 @@ export function Gallery() {
             </Reveal>
           )
         ) : (
-          <Reveal className="gallery-grid">
+          <div className="gallery-grid reveal-stagger">
             {images.map((img, i) => (
-              <button
+              <Reveal
+                as="button"
                 type="button"
                 className="gallery-item"
                 key={img.id}
+                style={{ "--i": i } as React.CSSProperties}
                 onClick={() => setOpenIndex(i)}
               >
                 <div className="ph">
                   <OptimizedImage src={img.imageUrl} width={400} alt={img.altText ?? img.caption ?? ""} />
                   {img.caption && <span className="cap">{img.caption}</span>}
                 </div>
-              </button>
+              </Reveal>
             ))}
-          </Reveal>
+          </div>
         )}
       </div>
 

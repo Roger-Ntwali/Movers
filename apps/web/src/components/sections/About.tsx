@@ -55,14 +55,12 @@ export function About() {
             We Move Your Life.
           </h2>
           <p>
-            At Movers Rwanda, we&rsquo;re more than just a moving company &mdash; we&rsquo;re your
-            trusted relocation partner. Whether you&rsquo;re moving across Kigali or to another
-            district, our goal is to make your move smooth, affordable and stress-free.
+            At Movers Rwanda, we&rsquo;re your trusted relocation partner &mdash; not just movers.
+            Across Kigali or to another district, our goal is a smooth, affordable, stress-free move.
           </p>
           <p>
-            As a proudly Rwandan company, we understand the local landscape and the importance of
-            careful handling, punctuality and customer respect. With every move, we&rsquo;re
-            building our reputation one successful move at a time.
+            As a proudly Rwandan company, we know the local landscape &mdash; and the value of
+            careful handling, punctuality and respect. Every move builds our reputation.
           </p>
           <Link to="/#footer" className="btn btn-outline on-light">
             Meet Movers Rwanda

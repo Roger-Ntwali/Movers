@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { api } from "../../lib/api";
-import { uploadImage, uploadVideo } from "../../lib/uploadImage";
+import { uploadAnyMedia, uploadImage, uploadVideo } from "../../lib/uploadImage";
+import { isCloudinaryVideoUrl } from "../../lib/cloudinaryUrl";
 import type { SiteSettings } from "../../types";
+
+const HERO_KEY = "hero_media_url";
 
 const LABELS: Record<string, string> = {
   phone: "Phone Number",
@@ -23,7 +26,7 @@ const VIDEO_KEYS: Record<string, string> = {
   editorial_video_url: "\"Your Belongings Are More Than Boxes\" Section Video",
 };
 
-const MEDIA_KEYS = new Set([...Object.keys(IMAGE_KEYS), ...Object.keys(VIDEO_KEYS)]);
+const MEDIA_KEYS = new Set([...Object.keys(IMAGE_KEYS), ...Object.keys(VIDEO_KEYS), HERO_KEY]);
 
 export function SettingsPage() {
   const [settings, setSettings] = useState<SiteSettings>({});
@@ -91,6 +94,20 @@ export function SettingsPage() {
     }
   };
 
+  const onHeroUpload = async (file: File) => {
+    setUploadingKey(HERO_KEY);
+    setUploadError(null);
+    try {
+      const url = await uploadAnyMedia(file, "site");
+      const updated = await saveKeys([HERO_KEY], { ...settings, [HERO_KEY]: url });
+      setSettings((prev) => ({ ...prev, ...updated }));
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploadingKey(null);
+    }
+  };
+
   if (loading) return null;
 
   return (
@@ -99,6 +116,47 @@ export function SettingsPage() {
         <div>
           <h1>Settings</h1>
           <p>Contact details, photos and videos — no code changes needed.</p>
+        </div>
+      </div>
+
+      <div className="admin-card">
+        <h3 style={{ marginBottom: 16 }}>Hero Background</h3>
+        <div className="admin-form" style={{ maxWidth: 560 }}>
+          <div className="field">
+            <label>Homepage Hero Background (photo or video)</label>
+            {settings[HERO_KEY] &&
+              (isCloudinaryVideoUrl(settings[HERO_KEY]) ? (
+                <video
+                  src={settings[HERO_KEY]}
+                  className="admin-thumb"
+                  style={{ width: 140, height: 90, marginBottom: 10, objectFit: "cover" }}
+                  muted
+                />
+              ) : (
+                <img src={settings[HERO_KEY]} alt="" className="admin-thumb" style={{ marginBottom: 10 }} />
+              ))}
+            <label className="admin-upload-drop">
+              {uploadingKey === HERO_KEY
+                ? "Uploading..."
+                : settings[HERO_KEY]
+                  ? "Click to replace"
+                  : "Click to upload a photo or video"}
+              <input
+                type="file"
+                accept="image/*,video/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) onHeroUpload(file);
+                  e.target.value = "";
+                }}
+                style={{ display: "none" }}
+              />
+            </label>
+          </div>
+          <p style={{ fontSize: "0.82rem", color: "var(--muted)" }}>
+            Shows behind the homepage hero text. Falls back to an abstract gradient until you upload
+            one — a wide, moderately dark photo/video of an actual move reads best against the text.
+          </p>
         </div>
       </div>
 

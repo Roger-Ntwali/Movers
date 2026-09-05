@@ -20,9 +20,9 @@ export function BlogTeaser() {
         {latest.length === 0 ? (
           !loading && <p className="review-empty">New articles are on the way.</p>
         ) : (
-          <div className="blog-grid">
-            {latest.map((post) => (
-              <Reveal as="article" className="blog-card" key={post.id}>
+          <div className="blog-grid reveal-stagger">
+            {latest.map((post, i) => (
+              <Reveal as="article" className="blog-card" key={post.id} style={{ "--i": i } as React.CSSProperties}>
                 <div className="blog-media">
                   {post.coverImageUrl && <OptimizedImage src={post.coverImageUrl} width={500} alt="" />}
                   {post.category && <span className="blog-cat">{post.category}</span>}

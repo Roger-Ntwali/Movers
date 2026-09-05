@@ -4,35 +4,35 @@ import { Reveal } from "../ui/Reveal";
 const FAQS = [
   {
     q: "Is Movers Rwanda licensed and insured?",
-    a: "We're happy to share our current licensing and insurance details on request — contact our team and we'll confirm exactly what applies to your move.",
+    a: "We're happy to share our licensing and insurance details on request — just contact our team.",
   },
   {
     q: "How much does moving cost?",
-    a: "Pricing depends on distance, volume, access at both locations, packing requirements and other factors. Request a free quote and we'll walk you through the details.",
+    a: "Cost depends on distance, volume, access and packing needs. Request a free quote for exact details.",
   },
   {
     q: "When should I book my move?",
-    a: "We recommend booking as early as possible, especially around weekends and month-end. Availability varies, so earlier requests give you more flexibility.",
+    a: "As early as you can, especially around weekends and month-end — earlier requests mean more flexibility.",
   },
   {
     q: "Do you provide packing services?",
-    a: "Yes. Our packing and unpacking service covers wrapping, boxing and labeling so your belongings are ready to move safely.",
+    a: "Yes — wrapping, boxing and labeling, so everything's ready to move safely.",
   },
   {
     q: "Do you move offices?",
-    a: "Yes, we handle office relocations including furniture, equipment and organized packing to keep downtime to a minimum.",
+    a: "Yes, including furniture, equipment and organized packing to minimize downtime.",
   },
   {
     q: "Do you move furniture between locations?",
-    a: "Yes, including disassembly, transport, reassembly and placement at your new location.",
+    a: "Yes — disassembly, transport, reassembly and placement, all included.",
   },
   {
     q: "Do you move outside Kigali?",
-    a: "Yes, we serve Kigali and surrounding districts. If your destination isn't listed, get in touch and we'll see how we can help.",
+    a: "Yes, Kigali and surrounding districts. Not listed? Get in touch and we'll find a way.",
   },
   {
     q: "Can I get a quote without calling?",
-    a: "Yes — use the online quote form above and our team will follow up with you directly.",
+    a: "Yes — use the quote form above and we'll follow up directly.",
   },
 ];
 

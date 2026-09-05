@@ -25,7 +25,7 @@ function dotIcon(isMain: boolean) {
     className: "rwanda-map-dot",
     html: `<span style="
       display:block; width:${size}px; height:${size}px; border-radius:50%;
-      background:#00D05E; border:2px solid #0B0F0E;
+      background:#5B6B4F; border:2px solid #201B14;
       box-shadow:0 0 0 5px rgba(0,208,94,0.22);
     "></span>`,
     iconSize: [size, size],
