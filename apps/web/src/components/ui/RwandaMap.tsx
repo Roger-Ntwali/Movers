@@ -16,6 +16,20 @@ interface RwandaMapProps {
 
 const RWANDA_CENTER: [number, number] = [-1.9403, 29.8739];
 
+// Leaflet doesn't publicly type this, but .remove() deletes it (note: NOT
+// the same as `_loaded`, which Leaflet never resets to false — checking
+// that instead looked right but didn't actually guard anything). Calling
+// .stop() or anything else touching panes after the pane's gone throws
+// reading internal position state. React StrictMode's dev-only
+// mount->cleanup->remount dance runs this component's OTHER effect's
+// cleanup (which calls .remove()) before this one's, so this guard is
+// needed purely to keep local dev console/render clean; it's a no-op in
+// production, where React doesn't double-invoke effects and the map is
+// never in this state mid-effect.
+function isMapAlive(map: L.Map): boolean {
+  return Boolean((map as unknown as { _mapPane?: unknown })._mapPane);
+}
+
 // Branded green dot marker instead of Leaflet's default pin — matches the
 // site's `.pin .dot` styling, and avoids bundling/importing the default
 // marker-icon.png assets.
@@ -68,7 +82,7 @@ export function RwandaMap({ points, onSelect }: RwandaMapProps) {
     // markers — and never animating fitBounds — avoids Leaflet's animation
     // callbacks firing against panes/markers this run has already replaced
     // (that raced crash was corrupting the map and, from there, React itself).
-    map.stop();
+    if (isMapAlive(map)) map.stop();
 
     const markers = points.map((point, i) => {
       const marker = L.marker([point.latitude, point.longitude], { icon: dotIcon(i === 0) })
@@ -86,7 +100,7 @@ export function RwandaMap({ points, onSelect }: RwandaMapProps) {
     }
 
     return () => {
-      map.stop();
+      if (isMapAlive(map)) map.stop();
       markers.forEach((m) => m.remove());
     };
   }, [points, onSelect]);
