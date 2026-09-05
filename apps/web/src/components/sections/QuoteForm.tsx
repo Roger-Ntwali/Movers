@@ -63,7 +63,7 @@ export function QuoteForm() {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="quote-card-head">
             <div>
-              <h2>Get A Quote</h2>
+              <h2>Get a Moving Quote</h2>
               <p>Tell us where you&rsquo;re moving from and where you&rsquo;re going.</p>
             </div>
             <span className="quote-badge">
@@ -157,7 +157,7 @@ export function QuoteForm() {
                 By requesting a quote, you agree to be contacted by our team about your move.
               </p>
               <button type="submit" className="btn btn-primary magnetic" ref={submitRef} disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Get A Quote"}
+                {isSubmitting ? "Sending..." : "Get a Moving Quote"}
               </button>
             </div>
           </div>

@@ -81,6 +81,15 @@
 .dropdown li a:hover{ background:var(--green-light); color:var(--green-dark); }
 
 .header-actions{ display:flex; align-items:center; gap:14px; }
+.admin-nav-icon{
+  display:flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:50%;
+  border:1px solid var(--border);
+  color:var(--muted);
+  flex:0 0 auto;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.admin-nav-icon:hover{ background:var(--green-light); color:var(--green-dark); border-color:transparent; }
 .hamburger{
   display:none;
   flex-direction:column; gap:5px;

@@ -58,7 +58,7 @@ export function Hero() {
 
         <Reveal className="hero-ctas">
           <Link to="/#quote" className="btn btn-primary magnetic" ref={ctaRef}>
-            Get A Quote
+            Get a Moving Quote
           </Link>
           <a
             href={whatsappHref(settings.whatsapp_number, QUOTE_WHATSAPP_MESSAGE)}

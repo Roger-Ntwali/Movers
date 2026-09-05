@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useHeaderScroll } from "../../hooks/useHeaderScroll";
 import { useMagneticHover } from "../../hooks/useMagneticHover";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
-import { ChevronDownIcon } from "../ui/icons";
+import { ChevronDownIcon, ShieldIcon } from "../ui/icons";
 
 const SERVICE_LINKS = [
   ["Home Moving", "/#services"],
@@ -122,8 +122,11 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
+          <Link to="/admin/login" className="admin-nav-icon" aria-label="Admin login">
+            <ShieldIcon size={18} />
+          </Link>
           <Link to="/#quote" className="btn btn-primary btn-sm magnetic desktop-only" ref={ctaRef}>
-            Get A Quote
+            Get a Moving Quote
           </Link>
           <button
             className={`hamburger${mobileOpen ? " is-open" : ""}`}
@@ -193,7 +196,7 @@ export function Header() {
         </ul>
         <div className="mobile-cta">
           <Link to="/#quote" className="btn btn-primary btn-block" onClick={closeMobile}>
-            Get A Quote
+            Get a Moving Quote
           </Link>
           <a className="btn btn-outline on-light btn-block" href={`tel:${settings.phone}`} onClick={closeMobile}>
             Call {settings.phone}

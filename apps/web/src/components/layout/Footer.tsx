@@ -105,7 +105,7 @@ export function Footer() {
               <Link to="/#faq">FAQ</Link>
             </li>
             <li>
-              <Link to="/#quote">Get a Quote</Link>
+              <Link to="/#quote">Get a Moving Quote</Link>
             </li>
           </ul>
           <h4>Contact</h4>
