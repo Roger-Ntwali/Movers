@@ -50,3 +50,10 @@ export function uploadImage(file: File, folder: UploadFolder): Promise<string> {
 export function uploadVideo(file: File, folder: UploadFolder): Promise<string> {
   return uploadMedia(file, folder, "video");
 }
+
+// For fields that accept either (the hero background) — infers resource
+// type from the file the browser gave us instead of needing a separate
+// image/video field pair.
+export function uploadAnyMedia(file: File, folder: UploadFolder): Promise<string> {
+  return uploadMedia(file, folder, file.type.startsWith("video/") ? "video" : "image");
+}

@@ -83,12 +83,13 @@ export function ServicesGrid() {
           </p>
         </Reveal>
 
-        <div className="services-grid">
+        <div className="services-grid reveal-stagger">
           {services.map((service, i) => (
             <Reveal
               as="article"
               className={`service-card${i === 0 || i === 3 ? " is-wide" : ""}`}
               key={service.id}
+              style={{ "--i": i } as React.CSSProperties}
             >
               <div className="service-bg">
                 <ImageCarousel images={service.imageUrls} />

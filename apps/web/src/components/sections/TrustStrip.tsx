@@ -12,9 +12,9 @@ export function TrustStrip() {
   return (
     <section className="trust-strip">
       <div className="container">
-        <Reveal className="trust-grid">
-          {ITEMS.map(({ icon: Icon, title, desc }) => (
-            <div className="trust-item" key={title}>
+        <div className="trust-grid reveal-stagger">
+          {ITEMS.map(({ icon: Icon, title, desc }, i) => (
+            <Reveal className="trust-item" key={title} style={{ "--i": i } as React.CSSProperties}>
               <span className="ic">
                 <Icon size={20} />
               </span>
@@ -22,9 +22,9 @@ export function TrustStrip() {
                 <strong>{title}</strong>
                 <span>{desc}</span>
               </div>
-            </div>
+            </Reveal>
           ))}
-        </Reveal>
+        </div>
       </div>
     </section>
   );

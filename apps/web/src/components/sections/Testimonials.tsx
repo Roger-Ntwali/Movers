@@ -51,12 +51,12 @@ export function Testimonials() {
             </Reveal>
           )
         ) : (
-          <Reveal className="reviews-track-wrap">
-            <div className="reviews-track" ref={trackRef}>
-              {testimonials.map((t) => (
-                <div className="review-card" key={t.id}>
+          <div className="reviews-track-wrap">
+            <div className="reviews-track reveal-stagger" ref={trackRef}>
+              {testimonials.map((t, i) => (
+                <Reveal className="review-card" key={t.id} style={{ "--i": i } as React.CSSProperties}>
                   {t.rating && <div className="stars">{"★".repeat(t.rating)}</div>}
-                  <p className="quote-text">{t.quote}</p>
+                  <p className="quote-text font-accent">{t.quote}</p>
                   <div className="review-meta">
                     <div className="review-avatar">{initials(t.authorName)}</div>
                     <div>
@@ -64,10 +64,10 @@ export function Testimonials() {
                       {t.authorRoleOrLocation && <span>{t.authorRoleOrLocation}</span>}
                     </div>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </Reveal>
+          </div>
         )}
       </div>
     </section>

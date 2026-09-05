@@ -14,6 +14,7 @@ const DEFAULT_SETTINGS: SiteSettings = {
   linkedin_url: "",
   about_image_url: "",
   editorial_video_url: "",
+  hero_media_url: "",
 };
 
 const SiteSettingsContext = createContext<SiteSettings>(DEFAULT_SETTINGS);

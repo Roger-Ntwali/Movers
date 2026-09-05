@@ -46,13 +46,13 @@ export function Editorial() {
               <path
                 d="M40,460 C120,380 80,260 200,240 S 300,120 360,40"
                 fill="none"
-                stroke="#00D05E"
+                stroke="#5B6B4F"
                 strokeWidth={2}
                 strokeDasharray="1 12"
                 strokeLinecap="round"
               />
-              <circle cx="40" cy="460" r="6" fill="#00D05E" />
-              <circle cx="360" cy="40" r="6" fill="#00D05E" />
+              <circle cx="40" cy="460" r="6" fill="#5B6B4F" />
+              <circle cx="360" cy="40" r="6" fill="#5B6B4F" />
             </svg>
           )}
         </Reveal>

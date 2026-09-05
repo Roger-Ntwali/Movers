@@ -13,37 +13,37 @@ const REASONS = [
     num: "01",
     icon: InvoiceIcon,
     title: "Price Transparency",
-    desc: "No confusing surprises. We explain your moving requirements and pricing clearly before the move.",
+    desc: "No confusing surprises — clear pricing, explained before you commit.",
   },
   {
     num: "02",
     icon: ClockIcon,
     title: "Move On Time",
-    desc: "We respect your schedule and work hard to arrive when promised.",
+    desc: "We respect your schedule and arrive when promised.",
   },
   {
     num: "03",
     icon: ShieldIcon,
     title: "Careful Handling",
-    desc: "Furniture, electronics, appliances and personal belongings are handled with care.",
+    desc: "Furniture, electronics and belongings — handled with real care.",
   },
   {
     num: "04",
     icon: TeamIcon,
     title: "Professional Team",
-    desc: "Friendly, trained movers who understand how to pack, lift, transport and organize belongings safely.",
+    desc: "Friendly, trained movers who pack, lift and transport safely.",
   },
   {
     num: "05",
     icon: HeartHandsIcon,
     title: "Customer-First Service",
-    desc: "From your first quote to the final delivery, we’re here to make the process easier.",
+    desc: "From first quote to final delivery, we make it easier.",
   },
   {
     num: "06",
     icon: FlexIcon,
     title: "Flexible Moving Solutions",
-    desc: "Every move is different. We adapt our service to your home, office, timeline and needs.",
+    desc: "Every move is different — we adapt to fit yours.",
   },
 ];
 
@@ -57,9 +57,9 @@ export function WhyChooseUs() {
           </span>
           <h2>Finally, A Moving Company That Gets It.</h2>
         </Reveal>
-        <div className="why-grid">
-          {REASONS.map(({ num, icon: Icon, title, desc }) => (
-            <Reveal className="why-card" key={num}>
+        <div className="why-grid reveal-stagger">
+          {REASONS.map(({ num, icon: Icon, title, desc }, i) => (
+            <Reveal className="why-card" key={num} style={{ "--i": i } as React.CSSProperties}>
               <span className="why-num">{num}</span>
               <div className="why-icon">
                 <Icon size={24} />

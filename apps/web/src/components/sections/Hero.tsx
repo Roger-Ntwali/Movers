@@ -3,15 +3,28 @@ import { Reveal } from "../ui/Reveal";
 import { CheckIcon } from "../ui/icons";
 import { WhatsAppIcon } from "../ui/icons";
 import { useMagneticHover } from "../../hooks/useMagneticHover";
+import { isCloudinaryVideoUrl, optimizeCloudinaryUrl } from "../../lib/cloudinaryUrl";
 import { QUOTE_WHATSAPP_MESSAGE, useSiteSettings, whatsappHref } from "../../context/SiteSettingsContext";
 
 export function Hero() {
   const settings = useSiteSettings();
   const ctaRef = useMagneticHover<HTMLAnchorElement>();
+  const heroMedia = settings.hero_media_url;
 
   return (
     <section className="hero">
-      <div className="hero-media"></div>
+      <div className="hero-media">
+        {heroMedia ? (
+          isCloudinaryVideoUrl(heroMedia) ? (
+            <video src={heroMedia} autoPlay muted loop playsInline />
+          ) : (
+            <img src={optimizeCloudinaryUrl(heroMedia, "w_1600")} alt="" />
+          )
+        ) : (
+          <div className="hero-media-fallback" />
+        )}
+        <div className="hero-vignette" />
+      </div>
       <svg
         className="hero-route"
         viewBox="0 0 1440 700"
@@ -21,13 +34,13 @@ export function Hero() {
         <path
           d="M-50,560 C 260,520 380,300 640,340 S 1060,560 1490,220"
           fill="none"
-          stroke="#00D05E"
+          stroke="#5B6B4F"
           strokeWidth={2}
           strokeDasharray="1 14"
           strokeLinecap="round"
         />
-        <circle cx="-50" cy="560" r="6" fill="#00D05E" />
-        <circle cx="1490" cy="220" r="6" fill="#00D05E" />
+        <circle cx="-50" cy="560" r="6" fill="#5B6B4F" />
+        <circle cx="1490" cy="220" r="6" fill="#5B6B4F" />
       </svg>
 
       <div className="container hero-inner">
@@ -40,13 +53,12 @@ export function Hero() {
           <em>We&rsquo;ve Got You Covered.</em>
         </Reveal>
         <Reveal as="p" className="hero-sub">
-          Professional, affordable and careful moving services for homes, offices and businesses
-          across Rwanda.
+          Reliable moving, done right — for homes, offices and businesses across Rwanda.
         </Reveal>
 
         <Reveal className="hero-ctas">
           <Link to="/#quote" className="btn btn-primary magnetic" ref={ctaRef}>
-            Get A Quote
+            Get a Moving Quote
           </Link>
           <a
             href={whatsappHref(settings.whatsapp_number, QUOTE_WHATSAPP_MESSAGE)}

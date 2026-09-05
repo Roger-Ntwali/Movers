@@ -9,3 +9,11 @@ export function optimizeCloudinaryUrl(url: string, extra = "w_1200"): string {
   if (/\/upload\/[^/]*f_auto/.test(url)) return url; // already transformed
   return url.replace("/upload/", `/upload/f_auto,q_auto,${extra}/`);
 }
+
+// Cloudinary encodes the resource type in the URL path itself
+// (".../video/upload/..." vs ".../image/upload/..."), so a single settings
+// field that can hold either (like the hero background) can tell them
+// apart without a separate stored flag.
+export function isCloudinaryVideoUrl(url: string): boolean {
+  return url.includes("/video/upload/");
+}
