@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useNewLeadsCount } from "../hooks/useNewLeadsCount";
 
 const NAV_ITEMS = [
   { to: "/admin", label: "Dashboard", end: true },
@@ -17,6 +18,7 @@ export function AdminLayout() {
   const { admin, logout } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const newLeadsCount = useNewLeadsCount();
 
   const handleLogout = async () => {
     await logout();
@@ -39,6 +41,9 @@ export function AdminLayout() {
               onClick={() => setSidebarOpen(false)}
             >
               {item.label}
+              {item.to === "/admin/leads" && newLeadsCount > 0 && (
+                <span className="admin-nav-badge">{newLeadsCount}</span>
+              )}
             </NavLink>
           ))}
         </nav>
