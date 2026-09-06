@@ -31,6 +31,12 @@ export function FinalCta() {
             <PhoneIcon />
             {settings.phone}
           </a>
+          {settings.phone_2 && (
+            <a href={`tel:${settings.phone_2}`}>
+              <PhoneIcon />
+              {settings.phone_2}
+            </a>
+          )}
           <a href={`mailto:${settings.email}`}>
             <MailIcon />
             {settings.email}

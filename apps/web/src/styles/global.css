@@ -136,6 +136,10 @@
 @media (max-width:640px){
   .topbar-left{ font-size:0.72rem; }
   .topbar .container{ padding-top:8px; padding-bottom:8px; }
+  /* Two phone numbers plus the business-name text don't fit this row at
+     phone widths — keep the primary number, the second is still reachable
+     via the mobile nav panel and footer, which have room for both. */
+  .topbar-phone + .topbar-phone{ display:none; }
 }
 
 /* =========================================================
