@@ -16,6 +16,12 @@ export function TopBar() {
             <PhoneIcon />
             <span>{settings.phone}</span>
           </a>
+          {settings.phone_2 && (
+            <a className="topbar-phone" href={`tel:${settings.phone_2}`}>
+              <PhoneIcon />
+              <span>{settings.phone_2}</span>
+            </a>
+          )}
         </div>
       </div>
     </div>

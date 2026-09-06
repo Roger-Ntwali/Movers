@@ -8,6 +8,7 @@ const HERO_KEY = "hero_media_url";
 
 const LABELS: Record<string, string> = {
   phone: "Phone Number",
+  phone_2: "Second Phone Number (optional, leave blank to hide)",
   whatsapp_number: "WhatsApp Number (digits only, e.g. 250787225782)",
   email: "Email",
   address: "Address",

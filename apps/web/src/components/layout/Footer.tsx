@@ -118,6 +118,12 @@ export function Footer() {
               <PhoneIcon size={15} />
               <a href={`tel:${settings.phone}`}>{settings.phone}</a>
             </li>
+            {settings.phone_2 && (
+              <li>
+                <PhoneIcon size={15} />
+                <a href={`tel:${settings.phone_2}`}>{settings.phone_2}</a>
+              </li>
+            )}
             <li>
               <MailIcon />
               <a href={`mailto:${settings.email}`}>{settings.email}</a>

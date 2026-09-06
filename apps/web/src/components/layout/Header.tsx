@@ -201,6 +201,11 @@ export function Header() {
           <a className="btn btn-outline on-light btn-block" href={`tel:${settings.phone}`} onClick={closeMobile}>
             Call {settings.phone}
           </a>
+          {settings.phone_2 && (
+            <a className="btn btn-outline on-light btn-block" href={`tel:${settings.phone_2}`} onClick={closeMobile}>
+              Call {settings.phone_2}
+            </a>
+          )}
         </div>
       </div>
     </>

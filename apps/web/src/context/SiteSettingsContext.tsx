@@ -4,6 +4,7 @@ import type { SiteSettings } from "../types";
 
 const DEFAULT_SETTINGS: SiteSettings = {
   phone: "+250787225782",
+  phone_2: "",
   whatsapp_number: "250787225782",
   email: "excelmoversrw@gmail.com",
   address: "Kigali, Rwanda",
