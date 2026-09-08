@@ -7,6 +7,7 @@ import { attachAuthIfPresent, requireAuth } from "../middleware/auth.js";
 import { leadsRateLimiter } from "../middleware/rateLimiter.js";
 import { validateBody } from "../middleware/validate.js";
 import { HttpError } from "../middleware/errorHandler.js";
+import { sendNewLeadEmail } from "../lib/email.js";
 
 export const leadsRouter = Router();
 
@@ -27,6 +28,9 @@ leadsRouter.post(
         return res.status(201).json({ ok: true });
       }
       const [created] = await db.insert(leads).values(data).returning();
+      // Only for genuine customer submissions — an admin manually logging a
+      // lead they already know about doesn't need to be told about it.
+      if (!req.admin) void sendNewLeadEmail(created);
       res.status(201).json(req.admin ? created : { ok: true, id: created.id });
     } catch (err) {
       next(err);
